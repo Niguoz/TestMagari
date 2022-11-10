@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -24,6 +23,7 @@ public class MainMenu : MonoBehaviour
     private void StartGame()
     {
         Debug.Log("Start");
+        SceneManager.LoadScene("GameScene");
     }
 
     private void Options()
