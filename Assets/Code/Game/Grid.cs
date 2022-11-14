@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Grid : MonoBehaviour
 {
@@ -16,6 +17,9 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private GameObject _endTile;
 
+    [SerializeField]
+    private Material _baseMaterial;
+
     private List<GameObject> _tiles = new();
 
     private void Start()
@@ -30,7 +34,7 @@ public class Grid : MonoBehaviour
 
         for (int i = 0; i < _size.x; i++)
         {
-            for(int j = 0; j < _size.y; j++)
+            for (int j = 0; j < _size.y; j++)
             {
                 if (i == (halfX) && j == halfY)
                 {
@@ -45,6 +49,7 @@ public class Grid : MonoBehaviour
                     _tiles.Add(go);
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
+                    go.name = _emptyTile.name;
                 }
             }
         }
@@ -52,7 +57,7 @@ public class Grid : MonoBehaviour
         int exitX = (int)Random.Range(0, _size.x);
         int exitY = (int)Random.Range(0, _size.x);
 
-        if( exitX == halfX && exitY == halfY)
+        if (exitX == halfX && exitY == halfY)
         {
             exitX = (int)Random.Range(0, _size.x);
             exitY = (int)Random.Range(0, _size.x);
@@ -65,7 +70,4 @@ public class Grid : MonoBehaviour
 
         yield return new WaitForSeconds(0.00001f);
     }
-
-
-
 }
