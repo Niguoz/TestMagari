@@ -37,14 +37,14 @@ public class Grid : MonoBehaviour
                     GameObject go = Instantiate(_startTile);
                     _tiles.Add(go);
                     go.transform.SetParent(transform);
-                    go.transform.position = new Vector3(i, j, 0);
+                    go.transform.position = new Vector3(i, 0, j);
                 }
                 else
                 {
                     GameObject go = Instantiate(_emptyTile);
                     _tiles.Add(go);
                     go.transform.SetParent(transform);
-                    go.transform.position = new Vector3(i, j, 0);
+                    go.transform.position = new Vector3(i, 0, j);
                 }
             }
         }
@@ -61,7 +61,7 @@ public class Grid : MonoBehaviour
         GameObject exit = Instantiate(_endTile);
         _tiles.Add(exit);
         exit.transform.SetParent(transform);
-        exit.transform.position = new Vector3(exitX, exitY, 0);
+        exit.transform.position = new Vector3(exitX, 0, exitY);
 
         yield return new WaitForSeconds(0.00001f);
     }
