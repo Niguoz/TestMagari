@@ -67,7 +67,6 @@ public class GridManager : Singleton<GridManager>
         GameObject exit = Instantiate(_endTile);
         exit.transform.SetParent(transform);
         exit.transform.position = new Vector3(exitX, 0, exitY);
-        Check();
 
         yield return new WaitForSeconds(0.00001f);
     }
@@ -76,7 +75,12 @@ public class GridManager : Singleton<GridManager>
     {
         foreach (GameObject tile in _tiles)
         {
-            tile.GetComponent<SimpleCube>().Check();
+            tile.GetComponent<SimpleCube>().Start();
         }
+    }
+
+    public void RemoveFromList(GameObject go)
+    {
+        _tiles.Remove(go);
     }
 }

@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 8058347299350026562}
   - component: {fileID: 4185352500793009731}
   - component: {fileID: 529037865324087228}
+  - component: {fileID: -2818856151491028583}
+  - component: {fileID: -5854906799970805701}
   m_Layer: 6
   m_Name: Tile05
-  m_TagString: Untagged
+  m_TagString: ComplexCube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,3 +131,34 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 65
+  _distance: 1
+--- !u!54 &-2818856151491028583
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147041035124629473}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &-5854906799970805701
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147041035124629473}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
