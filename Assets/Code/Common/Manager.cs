@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class Manager : Singleton<Manager>
 {
+    [SerializeField]
+    private GameObject _playerOne;
+    [SerializeField]
+    private GameObject _playerTwo;
+
     public void ChangeTile(GameObject tileToChange, GameObject newTile, float rotation)
     {
         GameObject go = Instantiate(newTile);
@@ -15,5 +20,11 @@ public class Manager : Singleton<Manager>
         GridManager.Instance.Check();
         GridManager.Instance.RemoveFromList(tileToChange);
         Destroy(tileToChange.gameObject);
+    }
+
+    public void SpawnPlayerOne(Vector3 position)
+    {
+        GameObject playerOne = Instantiate(_playerOne);
+        playerOne.transform.position = new Vector3(position.x, position.y + 1, position.z);    
     }
 }

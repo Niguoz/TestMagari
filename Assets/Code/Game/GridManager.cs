@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 public class GridManager : Singleton<GridManager>
 {
@@ -21,6 +22,8 @@ public class GridManager : Singleton<GridManager>
     private Material _baseMaterial;
 
     private List<GameObject> _tiles = new List<GameObject>();
+
+    private Vector3 _startPlayerOnePosition;
 
     private void Start()
     {
@@ -42,6 +45,7 @@ public class GridManager : Singleton<GridManager>
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
                     go.transform.rotation = Quaternion.identity;
+                    _startPlayerOnePosition = go.transform.position;
                 }
                 else
                 {
@@ -67,6 +71,8 @@ public class GridManager : Singleton<GridManager>
         GameObject exit = Instantiate(_endTile);
         exit.transform.SetParent(transform);
         exit.transform.position = new Vector3(exitX, 0, exitY);
+
+        Manager.Instance.SpawnPlayerOne(_startPlayerOnePosition);
 
         yield return new WaitForSeconds(0.00001f);
     }
