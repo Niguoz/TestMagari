@@ -7,13 +7,16 @@ public class SimpleCube : MonoBehaviour
 {
     public UnityEvent _action;
 
+
+    public void Changetile()
+    {
+        UIManager.Instance.ChangeTile(this.gameObject);
+    }
+
     private void OnMouseDown()
     {
         _action.Invoke();
     }
 
-    public void SetMaterial(MeshRenderer mesh)
-    {
-        mesh.material = UIManager.Instance.ChooseMaterial;
-    }
+    
 }

@@ -42,6 +42,7 @@ public class Grid : MonoBehaviour
                     _tiles.Add(go);
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
+                    go.transform.rotation = Quaternion.identity;
                 }
                 else
                 {
@@ -50,6 +51,7 @@ public class Grid : MonoBehaviour
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
                     go.name = _emptyTile.name;
+                    go.transform.localRotation = Quaternion.Euler(0, 180, 0); 
                 }
             }
         }

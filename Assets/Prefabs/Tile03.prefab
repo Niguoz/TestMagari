@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4185352500793009731}
   - component: {fileID: 529037865324087228}
   m_Layer: 0
-  m_Name: SimpleCube
+  m_Name: Tile03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0b583acf6ecd2314f905a53d2619d0ae, type: 2}
+  - {fileID: 2100000, guid: b53c6d0d94e64154cb336c7f55a6ff2b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

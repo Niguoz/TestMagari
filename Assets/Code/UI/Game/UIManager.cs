@@ -8,7 +8,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField]
     private List<Sprite> _tilesSprites = new();
     [SerializeField]
-    private List<Material> _materials = new();
+    private List<GameObject> _newTiles = new();
 
     private Image _tile1Image;
     private Image _tile2Image;
@@ -23,16 +23,16 @@ public class UIManager : Singleton<UIManager>
     private Button _button5;
 
 
-    private Material _material;
-    public Material ChooseMaterial => _material;
+    private GameObject _chooseTile;
+    public GameObject ChooseTile => _chooseTile;
 
     protected override void Awake()
     {
-        _tile1Image = transform.Find("TileContainer/Tile1").GetComponent<Image>();
-        _tile2Image = transform.Find("TileContainer/Tile2").GetComponent<Image>();
-        _tile3Image = transform.Find("TileContainer/Tile3").GetComponent<Image>();
-        _tile4Image = transform.Find("TileContainer/Tile4").GetComponent<Image>();
-        _tile5Image = transform.Find("TileContainer/Tile5").GetComponent<Image>();
+        _tile1Image = transform.Find("Player1/TileContainer/Tile1").GetComponent<Image>();
+        _tile2Image = transform.Find("Player1/TileContainer/Tile2").GetComponent<Image>();
+        _tile3Image = transform.Find("Player1/TileContainer/Tile3").GetComponent<Image>();
+        _tile4Image = transform.Find("Player1/TileContainer/Tile4").GetComponent<Image>();
+        _tile5Image = transform.Find("Player1/TileContainer/Tile5").GetComponent<Image>();
 
         _button1 = _tile1Image.gameObject.GetComponent<Button>();
         _button2 = _tile2Image.gameObject.GetComponent<Button>();
@@ -74,7 +74,12 @@ public class UIManager : Singleton<UIManager>
 
     private void SetMaterial(Sprite image)
     {
-        _material = _materials.Find(x => x.name == image.name);
-        Debug.Log(_material);
+        _chooseTile = _newTiles.Find(x => x.name == image.name);
+        Debug.Log(_chooseTile);
+    }
+
+    public void ChangeTile(GameObject tile)
+    {
+        Manager.Instance.ChangeTile(tile, _chooseTile, 180);
     }
 }
