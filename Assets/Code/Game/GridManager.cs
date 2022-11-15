@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Grid : MonoBehaviour
+public class GridManager : Singleton<GridManager>
 {
     [SerializeField]
     private Vector2 _size;
@@ -20,6 +20,7 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private Material _baseMaterial;
 
+    private List<GameObject> _tiles = new List<GameObject>();
 
     private void Start()
     {
@@ -48,6 +49,7 @@ public class Grid : MonoBehaviour
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
                     go.name = _emptyTile.name;
+                    _tiles.Add(go);
                     go.transform.localRotation = Quaternion.Euler(0, 180, 0); 
                 }
             }
@@ -65,7 +67,16 @@ public class Grid : MonoBehaviour
         GameObject exit = Instantiate(_endTile);
         exit.transform.SetParent(transform);
         exit.transform.position = new Vector3(exitX, 0, exitY);
+        Check();
 
         yield return new WaitForSeconds(0.00001f);
+    }
+
+    public void Check()
+    {
+        foreach (GameObject tile in _tiles)
+        {
+            tile.GetComponent<SimpleCube>().Check();
+        }
     }
 }

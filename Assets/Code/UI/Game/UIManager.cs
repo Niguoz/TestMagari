@@ -140,6 +140,7 @@ public class UIManager : Singleton<UIManager>
         _chooseTile = _newTiles.Find(x => x.name == image.sprite.name);
         Debug.Log(_chooseTile);
         image.sprite = null;
+        image.gameObject.SetActive(false);
 
     }
 
@@ -170,6 +171,7 @@ public class UIManager : Singleton<UIManager>
         {
             if(image.sprite == null)
             {
+                image.gameObject.SetActive(true);
                 SetSprite(image);
             }
         }
