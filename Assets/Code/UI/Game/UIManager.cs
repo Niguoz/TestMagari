@@ -24,7 +24,6 @@ public class UIManager : Singleton<UIManager>
 
 
     private GameObject _chooseTile;
-    public GameObject ChooseTile => _chooseTile;
 
     protected override void Awake()
     {

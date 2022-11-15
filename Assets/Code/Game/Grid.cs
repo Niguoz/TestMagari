@@ -20,7 +20,6 @@ public class Grid : MonoBehaviour
     [SerializeField]
     private Material _baseMaterial;
 
-    private List<GameObject> _tiles = new();
 
     private void Start()
     {
@@ -39,7 +38,6 @@ public class Grid : MonoBehaviour
                 if (i == (halfX) && j == halfY)
                 {
                     GameObject go = Instantiate(_startTile);
-                    _tiles.Add(go);
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
                     go.transform.rotation = Quaternion.identity;
@@ -47,7 +45,6 @@ public class Grid : MonoBehaviour
                 else
                 {
                     GameObject go = Instantiate(_emptyTile);
-                    _tiles.Add(go);
                     go.transform.SetParent(transform);
                     go.transform.position = new Vector3(i, 0, j);
                     go.name = _emptyTile.name;
@@ -66,7 +63,6 @@ public class Grid : MonoBehaviour
         }
 
         GameObject exit = Instantiate(_endTile);
-        _tiles.Add(exit);
         exit.transform.SetParent(transform);
         exit.transform.position = new Vector3(exitX, 0, exitY);
 
