@@ -11,6 +11,7 @@ public class Manager : Singleton<Manager>
         go.transform.position = tileToChange.transform.position;
         go.transform.localRotation = Quaternion.Euler(0, rotation, 0);
         go.GetComponent<SimpleCube>().ChangeBool();
+        go.GetComponent<SimpleCube>().Start();
         GridManager.Instance.Check();
         GridManager.Instance.RemoveFromList(tileToChange);
         Destroy(tileToChange.gameObject);

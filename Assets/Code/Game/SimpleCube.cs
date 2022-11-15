@@ -8,12 +8,14 @@ public class SimpleCube : MonoBehaviour
 {
     public UnityEvent _action;
     public bool _nearcomplexCube = false;
-    private bool _canFixRun = true;
 
     [SerializeField]
     private LayerMask _layer;
     [SerializeField]
     private float _distance;
+    [SerializeField]
+    private Material _possibleChangeMat;
+
 
     public void Changetile()
     {
@@ -23,6 +25,7 @@ public class SimpleCube : MonoBehaviour
     public void Start()
     {
         CheckUp();
+
     }
 
     private void OnMouseDown()
@@ -31,15 +34,13 @@ public class SimpleCube : MonoBehaviour
             _action.Invoke();
     }
 
-    private IEnumerator StopUpdate(bool value)
-    {
-        yield return new WaitForEndOfFrame();
-        _canFixRun = value;
-    }
-
     public void ChangeBool()
     {
         _nearcomplexCube = true;
+        if (this.gameObject.name == "SimpleCube")
+        {
+            this.gameObject.GetComponent<MeshRenderer>().material = _possibleChangeMat;
+        }
         Debug.Log("Cambiato bool");
     }
 
