@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 754628235214110591}
   - component: {fileID: 5290866136981828055}
   - component: {fileID: 7098694034274563645}
+  - component: {fileID: -4375408774371679342}
   m_Layer: 6
   m_Name: StartTile
   m_TagString: ComplexCube
@@ -345,6 +346,28 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &-4375408774371679342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8290989814948041641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90707f4af6a7f2d4288aa2419c757391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _action:
+    m_PersistentCalls:
+      m_Calls: []
+  _nearcomplexCube: 0
+  _layer:
+    serializedVersion: 2
+    m_Bits: 0
+  _distance: 0
+  _possibleChangeMat: {fileID: 0}
+  _owner: {fileID: 0}
 --- !u!1 &8456367883511594998
 GameObject:
   m_ObjectHideFlags: 0

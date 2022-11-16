@@ -275,6 +275,7 @@ GameObject:
   - component: {fileID: 529037865324087228}
   - component: {fileID: -2818856151491028583}
   - component: {fileID: -5854906799970805701}
+  - component: {fileID: -2002202802545169255}
   m_Layer: 6
   m_Name: Tile05
   m_TagString: ComplexCube
@@ -424,3 +425,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &-2002202802545169255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147041035124629473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90707f4af6a7f2d4288aa2419c757391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _action:
+    m_PersistentCalls:
+      m_Calls: []
+  _nearcomplexCube: 0
+  _layer:
+    serializedVersion: 2
+    m_Bits: 0
+  _distance: 0
+  _possibleChangeMat: {fileID: 0}
+  _owner: {fileID: 0}

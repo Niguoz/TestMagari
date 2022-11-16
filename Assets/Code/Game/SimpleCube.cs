@@ -42,7 +42,6 @@ namespace MagariProject.Game
             {
                 this.gameObject.GetComponent<MeshRenderer>().material = _possibleChangeMat;
             }
-            Debug.Log("Cambiato bool");
         }
 
         private void CheckLeft()

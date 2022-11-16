@@ -12,8 +12,17 @@ namespace MagariProject.Game
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                Debug.Log("Personaggio Entrato");
                 player.DecrementMoves();
+                this.transform.parent.transform.parent.gameObject.GetComponent<ComplexCube>().SetOwner(player.gameObject);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {             
+                this.transform.parent.transform.parent.gameObject.GetComponent<ComplexCube>().SetOwner(null);
             }
         }
     }

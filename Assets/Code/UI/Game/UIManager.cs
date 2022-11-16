@@ -131,7 +131,6 @@ namespace MagariProject.UI
         private void SetMaterial(Image image)
         {
             _chooseTile = _newTiles.Find(x => x.name == image.sprite.name);
-            Debug.Log(_chooseTile);
             image.sprite = null;
             image.gameObject.SetActive(false);
 

@@ -25,7 +25,6 @@ namespace MagariProject.UI
 
         private void StartGame()
         {
-            Debug.Log("Start");
             SceneManager.LoadScene("GameScene");
         }
 

@@ -1,4 +1,5 @@
 using MagariProject.Common;
+using MagariProject.Game;
 using MagariProject.Input;
 using MagariProject.UI;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace MagariProject.Character
         private Vector2 _movementInput;
         private Vector3 _moveOnZ;
         private int _moveStorage = 0;
+        private RaycastHit _hit;
 
         private void Awake()
         {
