@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Manager : Singleton<Manager>
@@ -8,6 +6,17 @@ public class Manager : Singleton<Manager>
     private GameObject _playerOne;
     [SerializeField]
     private GameObject _playerTwo;
+
+    private PlayerController _playerOneController;
+    private PlayerController _playerTwoController;
+
+    /*protected override void Awake()
+    {
+        _playerOneController = _playerOne.GetComponent<PlayerController>(); 
+        _playerTwoController= _playerTwo.GetComponent<PlayerController>();
+
+        base.Awake();
+    }*/
 
     public void ChangeTile(GameObject tileToChange, GameObject newTile, float rotation)
     {
@@ -25,6 +34,27 @@ public class Manager : Singleton<Manager>
     public void SpawnPlayerOne(Vector3 position)
     {
         GameObject playerOne = Instantiate(_playerOne);
-        playerOne.transform.position = new Vector3(position.x, position.y + 1, position.z);    
+        playerOne.transform.position = new Vector3(position.x, position.y + 1, position.z);
+        _playerOneController = playerOne.GetComponent<PlayerController>();
+        if (_playerOneController == null)
+        {
+            _playerOneController = playerOne.AddComponent<PlayerController>();
+        }
+
+        _playerOneController.enabled = false;
     }
+
+    public void SpawnPlayerTwo(Vector3 position)
+    {
+        GameObject playerTwo = Instantiate(_playerTwo);
+        playerTwo.transform.position = new Vector3(position.x, position.y + 1, position.z);
+        _playerTwoController = playerTwo.GetComponent<PlayerController>();
+        if (_playerTwoController == null)
+        {
+            _playerTwoController = playerTwo.AddComponent<PlayerController>();
+        }
+
+        _playerTwoController.enabled = false;
+    }
+
 }
