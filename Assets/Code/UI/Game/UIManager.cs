@@ -51,6 +51,7 @@ namespace MagariProject.UI
         private GameObject _chooseTile;
         private bool _isPlayerOne = true;
         private Button _changePlayer;
+        private Button _startMove;
 
         public bool IsPlayerOne => _isPlayerOne;
 
@@ -96,6 +97,7 @@ namespace MagariProject.UI
             _playerTwoButton5 = _playerTwoTile5Image.gameObject.GetComponent<Button>();
 
             _changePlayer = transform.Find("ChangePlayer").GetComponent<Button>();
+            _startMove = transform.Find("StartMovement").GetComponent<Button>();
 
             base.Awake();
         }
@@ -117,6 +119,7 @@ namespace MagariProject.UI
             _playerTwoButton5.onClick.AddListener(delegate { SetMaterial(_playerTwoTile5Image); });
 
             _changePlayer.onClick.AddListener(ChangePlayer);
+            _startMove.onClick.AddListener(EnablePlayerMovemement);
         }
 
         private void SetSprite(Image image)
@@ -171,7 +174,20 @@ namespace MagariProject.UI
         private void ChangePlayer()
         {
             _isPlayerOne = !_isPlayerOne;
+            Manager.Instance.DisableMOvement();
             SetPlayer();
+        }
+
+        private void EnablePlayerMovemement()
+        {
+            if(_isPlayerOne)
+            {
+                Manager.Instance.PlayerOneMovement();
+            }
+            else
+            {
+                Manager.Instance.PlayerTwoMovement();
+            }
         }
     }
 }

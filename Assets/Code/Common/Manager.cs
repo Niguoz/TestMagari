@@ -52,5 +52,21 @@ namespace MagariProject.Common
             _playerTwoController.enabled = false;
         }
 
+        public void PlayerOneMovement()
+        {
+            _playerOneController.enabled = true;
+        }
+
+        public void PlayerTwoMovement()
+        {
+            _playerTwoController.enabled = true;
+        }
+
+        public void DisableMOvement()
+        {
+            _playerOneController.enabled = false;
+            _playerTwoController.enabled = false;
+        }
+
     }
 }
