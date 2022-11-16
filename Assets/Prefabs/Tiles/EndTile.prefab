@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 4280317364081975658}
   - component: {fileID: 7307103212788386109}
   - component: {fileID: -8280430241781766240}
-  - component: {fileID: 2392611919301456732}
+  - component: {fileID: 5553059457122012077}
   m_Layer: 6
   m_Name: EndTile
   m_TagString: ComplexCube
@@ -176,7 +176,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2392611919301456732
+--- !u!114 &5553059457122012077
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -185,18 +185,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1588649716296008965}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 90707f4af6a7f2d4288aa2419c757391, type: 3}
+  m_Script: {fileID: 11500000, guid: f43100156afe48247bc210272c36c4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _action:
-    m_PersistentCalls:
-      m_Calls: []
-  _nearcomplexCube: 0
-  _layer:
-    serializedVersion: 2
-    m_Bits: 0
-  _distance: 0
-  _possibleChangeMat: {fileID: 0}
   _owner: {fileID: 0}
 --- !u!1 &2910013219919825383
 GameObject:

@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace MagariProject.Game
 {
-    public class ComplexCube : SimpleCube
+    public class ComplexCube : MonoBehaviour
     {
         [SerializeField]
-        private GameObject _owner;
+        protected GameObject _owner;
 
-        public void SetOwner(GameObject owner)
+        public virtual void SetOwner(GameObject owner)
         {
             Debug.Log("Cambiato owner");
             _owner = owner; 
