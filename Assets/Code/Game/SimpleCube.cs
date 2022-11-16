@@ -31,7 +31,10 @@ public class SimpleCube : MonoBehaviour
     private void OnMouseDown()
     {
         if (_nearcomplexCube)
+        {
             _action.Invoke();
+            GridManager.Instance.Check();
+        }
     }
 
     public void ChangeBool()

@@ -147,6 +147,7 @@ public class UIManager : Singleton<UIManager>
     public void ChangeTile(GameObject tile)
     {
         Manager.Instance.ChangeTile(tile, _chooseTile, 180);
+        _chooseTile = null;
     }
 
     private void SetPlayer()
