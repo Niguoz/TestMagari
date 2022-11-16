@@ -22,12 +22,6 @@ namespace MagariProject.Game
             UIManager.Instance.ChangeTile(this.gameObject);
         }
 
-        public void Start()
-        {
-            CheckUp();
-
-        }
-
         private void FixedUpdate()
         {
             CheckUp();
@@ -38,7 +32,6 @@ namespace MagariProject.Game
             if (_nearcomplexCube)
             {
                 _action.Invoke();
-                GridManager.Instance.Check();
             }
         }
 

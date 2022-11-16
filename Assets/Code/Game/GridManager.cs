@@ -93,13 +93,6 @@ namespace MagariProject.Game
             yield return new WaitForSeconds(0.00001f);
         }
 
-        public void Check()
-        {
-            foreach (GameObject tile in _tiles)
-            {
-                tile.GetComponent<SimpleCube>().Start();
-            }
-        }
 
         public void RemoveFromList(GameObject go)
         {
