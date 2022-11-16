@@ -7,13 +7,21 @@ namespace MagariProject.Game
 {
     public class TriggerWalls : MonoBehaviour
     {
+        private GameObject _parent;
+
+        private void Awake()
+        {
+            _parent = this.transform.parent.transform.parent.gameObject;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
                 player.DecrementMoves();
-                this.transform.parent.transform.parent.gameObject.GetComponent<ComplexCube>().SetOwner(player.gameObject);
+                _parent.GetComponent<ComplexCube>().SetOwner(player.gameObject);
+                player.OwnedTile = _parent;
             }
         }
 
@@ -21,8 +29,8 @@ namespace MagariProject.Game
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if (player != null)
-            {             
-                this.transform.parent.transform.parent.gameObject.GetComponent<ComplexCube>().SetOwner(null);
+            {
+                _parent.GetComponent<ComplexCube>().CancelOwner();
             }
         }
     }

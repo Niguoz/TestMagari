@@ -52,6 +52,11 @@ namespace MagariProject.Common
             _playerTwoController.enabled = false;
         }
 
+        public void ChangePosition(GameObject go, Vector3 position)
+        {
+            go.transform.position = new Vector3(position.x, position.y + 1, position.z);
+        }
+
         public void PlayerOneMovement()
         {
             _playerOneController.enabled = true;

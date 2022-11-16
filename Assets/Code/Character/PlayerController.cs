@@ -18,7 +18,10 @@ namespace MagariProject.Character
         private Vector2 _movementInput;
         private Vector3 _moveOnZ;
         private int _moveStorage = 0;
-        private RaycastHit _hit;
+        private GameObject _ownedTile;
+
+        public GameObject OwnedTile { get { return _ownedTile; } set { _ownedTile = value; } }
+       
 
         private void Awake()
         {
