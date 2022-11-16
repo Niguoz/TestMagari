@@ -1,107 +1,109 @@
+using MagariProject.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
-public class GridManager : Singleton<GridManager>
+namespace MagariProject.Game
 {
-    [SerializeField]
-    private Vector2 _size;
-
-    [SerializeField]
-    private GameObject _emptyTile;
-
-    [SerializeField]
-    private GameObject _startTile;
-
-    [SerializeField]
-    private GameObject _endTile;
-
-    [SerializeField]
-    private Material _baseMaterial;
-
-    private List<GameObject> _tiles = new List<GameObject>();
-
-    private Vector3 _startPlayerOnePosition;
-    private Vector3 _startPlayerTwoPosition;
-
-    private void Start()
+    public class GridManager : Singleton<GridManager>
     {
-        StartCoroutine(CreateGrid());
-    }
+        [SerializeField]
+        private Vector2 _size;
 
-    private IEnumerator CreateGrid()
-    {
-        int halfX = (int)(_size.x / 2);
-        int halfY = (int)(_size.y / 2);
+        [SerializeField]
+        private GameObject _emptyTile;
 
-        int exitX = (int)Random.Range(0, _size.x);
-        int exitY = (int)Random.Range(0, _size.x);
+        [SerializeField]
+        private GameObject _startTile;
 
-        if ((exitX == halfX && exitY == halfY) || (exitX == halfX - 1 && exitY == halfY - 1))
+        [SerializeField]
+        private GameObject _endTile;
+
+        [SerializeField]
+        private Material _baseMaterial;
+
+        private List<GameObject> _tiles = new List<GameObject>();
+
+        private Vector3 _startPlayerOnePosition;
+        private Vector3 _startPlayerTwoPosition;
+
+        private void Start()
         {
-            exitX = (int)Random.Range(0, _size.x);
-            exitY = (int)Random.Range(0, _size.x);
+            StartCoroutine(CreateGrid());
         }
 
-        for (int i = 0; i < _size.x; i++)
+        private IEnumerator CreateGrid()
         {
-            for (int j = 0; j < _size.y; j++)
+            int halfX = (int)(_size.x / 2);
+            int halfY = (int)(_size.y / 2);
+
+            int exitX = (int)Random.Range(0, _size.x);
+            int exitY = (int)Random.Range(0, _size.x);
+
+            if ((exitX == halfX && exitY == halfY) || (exitX == halfX - 1 && exitY == halfY - 1))
             {
-                if (i == (halfX) && j == halfY)
+                exitX = (int)Random.Range(0, _size.x);
+                exitY = (int)Random.Range(0, _size.x);
+            }
+
+            for (int i = 0; i < _size.x; i++)
+            {
+                for (int j = 0; j < _size.y; j++)
                 {
-                    GameObject go = Instantiate(_startTile);
-                    go.transform.SetParent(transform);
-                    go.transform.position = new Vector3(i, 0, j);
-                    go.transform.rotation = Quaternion.identity;
-                    _startPlayerOnePosition = go.transform.position;
+                    if (i == (halfX) && j == halfY)
+                    {
+                        GameObject go = Instantiate(_startTile);
+                        go.transform.SetParent(transform);
+                        go.transform.position = new Vector3(i, 0, j);
+                        go.transform.rotation = Quaternion.identity;
+                        _startPlayerOnePosition = go.transform.position;
+                    }
+                    else if (i == (halfX - 1) && j == halfY - 1)
+                    {
+                        GameObject go = Instantiate(_startTile);
+                        go.transform.SetParent(transform);
+                        go.transform.position = new Vector3(i, 0, j);
+                        go.transform.rotation = Quaternion.identity;
+                        _startPlayerTwoPosition = go.transform.position;
+                    }
+                    else if (i == exitX && j == exitY)
+                    {
+                        GameObject exit = Instantiate(_endTile);
+                        exit.transform.SetParent(transform);
+                        exit.transform.position = new Vector3(exitX, 0, exitY);
+                    }
+                    else
+                    {
+                        GameObject go = Instantiate(_emptyTile);
+                        go.transform.SetParent(transform);
+                        go.transform.position = new Vector3(i, 0, j);
+                        go.name = _emptyTile.name;
+                        _tiles.Add(go);
+                        go.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                    }
                 }
-                else if(i == (halfX -1) && j == halfY -1)
-                {
-                    GameObject go = Instantiate(_startTile);
-                    go.transform.SetParent(transform);
-                    go.transform.position = new Vector3(i, 0, j);
-                    go.transform.rotation = Quaternion.identity;
-                    _startPlayerTwoPosition = go.transform.position;
-                }
-                else if (i == exitX && j == exitY)
-                {
-                    GameObject exit = Instantiate(_endTile);
-                    exit.transform.SetParent(transform);
-                    exit.transform.position = new Vector3(exitX, 0, exitY);
-                }
-                else
-                {
-                    GameObject go = Instantiate(_emptyTile);
-                    go.transform.SetParent(transform);
-                    go.transform.position = new Vector3(i, 0, j);
-                    go.name = _emptyTile.name;
-                    _tiles.Add(go);
-                    go.transform.localRotation = Quaternion.Euler(0, 180, 0); 
-                }
+            }
+
+
+
+
+            Manager.Instance.SpawnPlayerOne(_startPlayerOnePosition);
+            Manager.Instance.SpawnPlayerTwo(_startPlayerTwoPosition);
+
+            yield return new WaitForSeconds(0.00001f);
+        }
+
+        public void Check()
+        {
+            foreach (GameObject tile in _tiles)
+            {
+                tile.GetComponent<SimpleCube>().Start();
             }
         }
 
-        
-   
-
-        Manager.Instance.SpawnPlayerOne(_startPlayerOnePosition);
-        Manager.Instance.SpawnPlayerTwo(_startPlayerTwoPosition);
-
-        yield return new WaitForSeconds(0.00001f);
-    }
-
-    public void Check()
-    {
-        foreach (GameObject tile in _tiles)
+        public void RemoveFromList(GameObject go)
         {
-            tile.GetComponent<SimpleCube>().Start();
+            _tiles.Remove(go);
         }
-    }
-
-    public void RemoveFromList(GameObject go)
-    {
-        _tiles.Remove(go);
     }
 }

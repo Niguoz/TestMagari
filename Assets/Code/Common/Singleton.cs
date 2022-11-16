@@ -1,33 +1,36 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : Component
+namespace MagariProject.Common
 {
-    protected static T _instance;
-
-    public static T Instance
+    public class Singleton<T> : MonoBehaviour where T : Component
     {
-        get
+        protected static T _instance;
+
+        public static T Instance
         {
-            if (_instance == null)
+            get
             {
-                _instance = FindObjectOfType<T>();
                 if (_instance == null)
                 {
-                    GameObject obj = new GameObject(typeof(T).ToString());
-                    _instance = obj.AddComponent<T>();
+                    _instance = FindObjectOfType<T>();
+                    if (_instance == null)
+                    {
+                        GameObject obj = new GameObject(typeof(T).ToString());
+                        _instance = obj.AddComponent<T>();
+                    }
                 }
+                return _instance;
             }
-            return _instance;
         }
-    }
 
-    protected virtual void Awake()
-    {
-        if (!Application.isPlaying)
+        protected virtual void Awake()
         {
-            return;
-        }
+            if (!Application.isPlaying)
+            {
+                return;
+            }
 
-        _instance = this as T;
+            _instance = this as T;
+        }
     }
 }

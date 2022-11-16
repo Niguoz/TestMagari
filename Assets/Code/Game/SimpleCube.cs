@@ -1,128 +1,129 @@
-using System.Collections;
-using Unity.VisualScripting;
+using MagariProject.UI;
 using UnityEngine;
 using UnityEngine.Events;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class SimpleCube : MonoBehaviour
+namespace MagariProject.Game
 {
-    public UnityEvent _action;
-    public bool _nearcomplexCube = false;
-
-    [SerializeField]
-    private LayerMask _layer;
-    [SerializeField]
-    private float _distance;
-    [SerializeField]
-    private Material _possibleChangeMat;
-
-
-    public void Changetile()
+    public class SimpleCube : MonoBehaviour
     {
-        UIManager.Instance.ChangeTile(this.gameObject);
-    }
+        public UnityEvent _action;
+        public bool _nearcomplexCube = false;
 
-    public void Start()
-    {
-        CheckUp();
+        [SerializeField]
+        private LayerMask _layer;
+        [SerializeField]
+        private float _distance;
+        [SerializeField]
+        private Material _possibleChangeMat;
 
-    }
 
-    private void FixedUpdate()
-    {
-        CheckUp();
-    }
-
-    private void OnMouseDown()
-    {
-        if (_nearcomplexCube)
+        public void Changetile()
         {
-            _action.Invoke();
-            GridManager.Instance.Check();
+            UIManager.Instance.ChangeTile(this.gameObject);
         }
-    }
 
-    public void ChangeBool()
-    {
-        _nearcomplexCube = true;
-        if (this.gameObject.name == "SimpleCube")
+        public void Start()
         {
-            this.gameObject.GetComponent<MeshRenderer>().material = _possibleChangeMat;
+            CheckUp();
+
         }
-        Debug.Log("Cambiato bool");
-    }
 
-    private void CheckLeft()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hit, _distance, _layer))
+        private void FixedUpdate()
         {
-            if (hit.collider.tag == "ComplexCube")
+            CheckUp();
+        }
+
+        private void OnMouseDown()
+        {
+            if (_nearcomplexCube)
             {
-                ChangeBool();
+                _action.Invoke();
+                GridManager.Instance.Check();
+            }
+        }
+
+        public void ChangeBool()
+        {
+            _nearcomplexCube = true;
+            if (this.gameObject.name == "SimpleCube")
+            {
+                this.gameObject.GetComponent<MeshRenderer>().material = _possibleChangeMat;
+            }
+            Debug.Log("Cambiato bool");
+        }
+
+        private void CheckLeft()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hit, _distance, _layer))
+            {
+                if (hit.collider.tag == "ComplexCube")
+                {
+                    ChangeBool();
+                }
+                else
+                {
+                    CheckDown();
+                }
             }
             else
             {
                 CheckDown();
             }
         }
-        else
-        {
-            CheckDown();
-        }
-    }
 
-    private void CheckUp()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, _distance, _layer))
+        private void CheckUp()
         {
-            if (hit.collider.tag == "ComplexCube")
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, _distance, _layer))
             {
-                ChangeBool();
+                if (hit.collider.tag == "ComplexCube")
+                {
+                    ChangeBool();
+                }
+                else
+                {
+                    CheckLeft();
+                }
+
             }
             else
             {
                 CheckLeft();
             }
-
         }
-        else
-        {
-            CheckLeft();
-        }
-    }
 
-    private void CheckDown()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, _distance, _layer))
+        private void CheckDown()
         {
-            if (hit.collider.tag == "ComplexCube")
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hit, _distance, _layer))
             {
-                ChangeBool();
+                if (hit.collider.tag == "ComplexCube")
+                {
+                    ChangeBool();
+                }
+                else
+                {
+                    CheckRight();
+                }
             }
             else
             {
                 CheckRight();
             }
         }
-        else
-        {
-            CheckRight();
-        }
-    }
 
-    private void CheckRight()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, _distance, _layer))
+        private void CheckRight()
         {
-            if (hit.collider.tag == "ComplexCube")
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hit, _distance, _layer))
             {
-                ChangeBool();
+                if (hit.collider.tag == "ComplexCube")
+                {
+                    ChangeBool();
+                }
             }
         }
-    }
 
+    }
 }
