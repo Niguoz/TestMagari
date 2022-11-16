@@ -171,7 +171,7 @@ namespace MagariProject.UI
             }
         }
 
-        private void ChangePlayer()
+        public void ChangePlayer()
         {
             _isPlayerOne = !_isPlayerOne;
             Manager.Instance.DisableMOvement();

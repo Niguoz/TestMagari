@@ -9,9 +9,11 @@ namespace MagariProject.Game
     {
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.GetComponent<PlayerController>() != null)
+            PlayerController player = other.gameObject.GetComponent<PlayerController>();
+            if (player != null)
             {
                 Debug.Log("Personaggio Entrato");
+                player.DecrementMoves();
             }
         }
     }
