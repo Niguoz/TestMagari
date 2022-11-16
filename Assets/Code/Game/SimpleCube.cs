@@ -28,6 +28,11 @@ public class SimpleCube : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        CheckUp();
+    }
+
     private void OnMouseDown()
     {
         if (_nearcomplexCube)
