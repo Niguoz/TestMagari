@@ -19,7 +19,7 @@ namespace MagariProject.Game
 
         public void Changetile()
         {
-            UIManager.Instance.ChangeTile(this.gameObject);
+            UIManager.Instance.SetDirectionSpawn(this.gameObject);
         }
 
         private void FixedUpdate()

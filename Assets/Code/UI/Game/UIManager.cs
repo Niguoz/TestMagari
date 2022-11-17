@@ -48,6 +48,15 @@ namespace MagariProject.UI
         private List<Image> _playerTwoImages = new();
         #endregion
 
+        #region
+        private Button _spawnUp;
+        private Button _spawnDown;
+        private Button _spawnLeft;
+        private Button _spawnRight;
+        private List<Button> _spawnButtons = new();
+        private GameObject _buttonContainer;
+        #endregion
+
         private GameObject _chooseTile;
         private bool _isPlayerOne = true;
         private Button _changePlayer;
@@ -96,6 +105,17 @@ namespace MagariProject.UI
             _playerTwoButton4 = _playerTwoTile4Image.gameObject.GetComponent<Button>();
             _playerTwoButton5 = _playerTwoTile5Image.gameObject.GetComponent<Button>();
 
+            _buttonContainer = transform.Find("Direction").gameObject;
+            _spawnUp = _buttonContainer.transform.Find("Up").gameObject.GetComponent<Button>();
+            _spawnDown = _buttonContainer.transform.Find("Down").gameObject.GetComponent<Button>();
+            _spawnLeft = _buttonContainer.transform.Find("Left").gameObject.GetComponent<Button>();
+            _spawnRight = _buttonContainer.transform.Find("Right").gameObject.GetComponent<Button>();
+            _spawnButtons.Add(_spawnUp);
+            _spawnButtons.Add(_spawnLeft);
+            _spawnButtons.Add(_spawnDown);
+            _spawnButtons.Add(_spawnRight);
+
+
             _changePlayer = transform.Find("ChangePlayer").GetComponent<Button>();
             _startMove = transform.Find("StartMovement").GetComponent<Button>();
 
@@ -118,6 +138,8 @@ namespace MagariProject.UI
             _playerTwoButton4.onClick.AddListener(delegate { SetMaterial(_playerTwoTile4Image); });
             _playerTwoButton5.onClick.AddListener(delegate { SetMaterial(_playerTwoTile5Image); });
 
+            _buttonContainer.SetActive(false);
+
             _changePlayer.onClick.AddListener(ChangePlayer);
             _startMove.onClick.AddListener(EnablePlayerMovemement);
         }
@@ -136,10 +158,27 @@ namespace MagariProject.UI
 
         }
 
-        public void ChangeTile(GameObject tile)
+        public void SetDirectionSpawn(GameObject tile)
         {
-            Manager.Instance.ChangeTile(tile, _chooseTile, 180);
-            _chooseTile = null;
+            _buttonContainer.SetActive(true);
+            _spawnUp.onClick.AddListener(delegate { ChangeTile(tile, 180); });
+            _spawnLeft.onClick.AddListener(delegate { ChangeTile(tile, 90); });
+            _spawnDown.onClick.AddListener(delegate { ChangeTile(tile, 0); });
+            _spawnRight.onClick.AddListener(delegate { ChangeTile(tile, -90); });
+        }
+
+        private void ChangeTile(GameObject tile, float rotation)
+        {
+            if (_chooseTile != null)
+            {
+                Manager.Instance.ChangeTile(tile, _chooseTile, rotation);
+                _chooseTile = null;
+                foreach (Button button in _spawnButtons)
+                {
+                    button.onClick.RemoveAllListeners();
+                }
+            }
+            _buttonContainer.SetActive(false);
         }
 
         private void SetPlayer()
