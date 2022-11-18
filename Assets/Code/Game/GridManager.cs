@@ -84,9 +84,6 @@ namespace MagariProject.Game
                 }
             }
 
-
-
-
             Manager.Instance.SpawnPlayerOne(_startPlayerOnePosition);
             Manager.Instance.SpawnPlayerTwo(_startPlayerTwoPosition);
 

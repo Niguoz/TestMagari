@@ -1,5 +1,6 @@
 using MagariProject.Common;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -155,7 +156,6 @@ namespace MagariProject.UI
             _chooseTile = _newTiles.Find(x => x.name == image.sprite.name);
             image.sprite = null;
             image.gameObject.SetActive(false);
-
         }
 
         public void SetDirectionSpawn(GameObject tile)
@@ -179,6 +179,37 @@ namespace MagariProject.UI
                 }
             }
             _buttonContainer.SetActive(false);
+
+            if(_isPlayerOne)
+            {
+                if(CheckList(_playerOneImages))
+                {
+                    EnablePlayerMovemement();
+                }
+            }
+            else
+            {
+                if (CheckList(_playerTwoImages))
+                {
+                    EnablePlayerMovemement();
+                }
+            }
+        }
+
+        private bool CheckList(List<Image> list)
+        {
+            bool allNotActive = true;
+
+            foreach (Image image in list)
+            {
+                if(image.gameObject.activeInHierarchy)
+                {
+                    allNotActive = false;
+                    break;
+                }
+            }
+
+            return allNotActive;
         }
 
         private void SetPlayer()
