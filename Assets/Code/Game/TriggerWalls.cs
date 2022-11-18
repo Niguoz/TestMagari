@@ -1,6 +1,4 @@
 using MagariProject.Character;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MagariProject.Game
@@ -14,6 +12,9 @@ namespace MagariProject.Game
             _parent = this.transform.parent.transform.parent.gameObject;
         }
 
+        /// <summary>
+        /// Set the tile owner to player and decrement the player's moves
+        /// </summary>
         private void OnTriggerEnter(Collider other)
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
@@ -21,10 +22,13 @@ namespace MagariProject.Game
             {
                 _parent.GetComponent<ComplexCube>().SetOwner(player.gameObject);
                 player.OwnedTile = _parent;
-                player.DecrementMoves();             
+                player.DecrementMoves();
             }
         }
 
+        /// <summary>
+        /// Reset the tile owner to null
+        /// </summary>
         private void OnTriggerExit(Collider other)
         {
             PlayerController player = other.gameObject.GetComponent<PlayerController>();

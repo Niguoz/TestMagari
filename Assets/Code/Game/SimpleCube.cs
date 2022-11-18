@@ -16,7 +16,9 @@ namespace MagariProject.Game
         [SerializeField]
         private Material _possibleChangeMat;
 
-
+        /// <summary>
+        /// When clicked, set the place where the new tile has to spawn
+        /// </summary>
         public void Changetile()
         {
             UIManager.Instance.SetDirectionSpawn(this.gameObject);
@@ -35,6 +37,9 @@ namespace MagariProject.Game
             }
         }
 
+        /// <summary>
+        /// If it's near a dungeon cube change its boolean
+        /// </summary>
         public void ChangeBool()
         {
             _nearcomplexCube = true;
@@ -43,6 +48,10 @@ namespace MagariProject.Game
                 this.gameObject.GetComponent<MeshRenderer>().material = _possibleChangeMat;
             }
         }
+
+        /// <summary>
+        /// Check all the direction for a dungeon cube
+        /// </summary>
 
         private void CheckLeft()
         {

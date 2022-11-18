@@ -1,5 +1,6 @@
 using MagariProject.Character;
 using MagariProject.Game;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace MagariProject.Common
@@ -23,6 +24,12 @@ namespace MagariProject.Common
             DontDestroyOnLoad(this);
         }
 
+        /// <summary>
+        /// Spawn the choose tile with the choose rotation at the choose place
+        /// </summary>
+        /// <param name="tileToChange"></param>
+        /// <param name="newTile"></param>
+        /// <param name="rotation"></param>
         public void ChangeTile(GameObject tileToChange, GameObject newTile, float rotation)
         {
             GameObject go = Instantiate(newTile);
@@ -34,6 +41,10 @@ namespace MagariProject.Common
             Destroy(tileToChange.gameObject);
         }
 
+        /// <summary>
+        /// Spawn player One at his start position
+        /// </summary>
+        /// <param name="position"></param>
         public void SpawnPlayerOne(Vector3 position)
         {
             GameObject playerOne = Instantiate(_playerOne);
@@ -48,6 +59,10 @@ namespace MagariProject.Common
             _playerOneController.enabled = false;
         }
 
+        /// <summary>
+        /// Spawn player Two at his start position
+        /// </summary>
+        /// <param name="position"></param>
         public void SpawnPlayerTwo(Vector3 position)
         {
             GameObject playerTwo = Instantiate(_playerTwo);
@@ -62,6 +77,12 @@ namespace MagariProject.Common
             _playerTwoController.enabled = false;
         }
 
+        /// <summary>
+        /// If they cross another character while moving, they swap positions as
+        /// part of the movement.
+        /// </summary>
+        /// <param name="go">Prev Owner of the tile</param>
+        /// <param name="position">Position of the prev tile owned by the player</param>
         public void ChangePosition(GameObject go, Vector3 position)
         {
             go.transform.position = new Vector3(position.x, position.y + 1, position.z);
@@ -83,10 +104,13 @@ namespace MagariProject.Common
             _playerTwoController.enabled = false;
         }
 
+        /// <summary>
+        /// Set the winner name
+        /// </summary>
+        /// <param name="name"></param>
         public void SetWinner(string name)
         {
             _winnerName = name;
         }
-
     }
 }

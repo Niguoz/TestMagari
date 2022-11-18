@@ -8,16 +8,19 @@ namespace MagariProject.UI
     public class MainMenu : MonoBehaviour
     {
         private Button _playButton;
+        private Button _tutorialButton;
         private Button _optionsButton;
         private Button _exitButton;
 
         private void Awake()
         {
             _playButton = transform.Find("New Game").GetComponent<Button>();
+            _tutorialButton = transform.Find("Tutorial").GetComponent<Button>();
             _optionsButton = transform.Find("Options").GetComponent<Button>();
             _exitButton = transform.Find("Exit").GetComponent<Button>();
 
             _playButton.onClick.AddListener(StartGame);
+            _tutorialButton.onClick.AddListener(Tutorial);
             _optionsButton.onClick.AddListener(Options);
             _exitButton.onClick.AddListener(QuitGame);
         }
@@ -28,6 +31,11 @@ namespace MagariProject.UI
             SceneManager.LoadScene("GameScene");
         }
 
+        private void Tutorial()
+        {
+            Debug.Log("Tutorial");
+        }
+
         private void Options()
         {
             Debug.Log("Options");
@@ -35,7 +43,6 @@ namespace MagariProject.UI
 
         private void QuitGame()
         {
-            Debug.Log("Exit Game");
             Application.Quit();
         }
     }

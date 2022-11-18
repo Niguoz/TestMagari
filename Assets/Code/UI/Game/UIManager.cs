@@ -1,6 +1,5 @@
 using MagariProject.Common;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -145,12 +144,18 @@ namespace MagariProject.UI
             _startMove.onClick.AddListener(EnablePlayerMovemement);
         }
 
+        /// <summary>
+        /// Set a random tile in the player's hand
+        /// </summary>
         private void SetSprite(Image image)
         {
             int ranSprite = Random.Range(0, _tilesSprites.Count);
             image.sprite = _tilesSprites[ranSprite];
         }
 
+        /// <summary>
+        /// Set the choose tile for the board and removes it from the hand
+        /// </summary>
         private void SetMaterial(Image image)
         {
             _chooseTile = _newTiles.Find(x => x.name == image.sprite.name);
@@ -158,6 +163,9 @@ namespace MagariProject.UI
             image.gameObject.SetActive(false);
         }
 
+        /// <summary>
+        /// Enable the tile's direction choice
+        /// </summary>
         public void SetDirectionSpawn(GameObject tile)
         {
             _buttonContainer.SetActive(true);
@@ -167,6 +175,9 @@ namespace MagariProject.UI
             _spawnRight.onClick.AddListener(delegate { ChangeTile(tile, -90); });
         }
 
+        /// <summary>
+        /// Set the tile's type and direction and, if the player has no tiles in hand, enable the movement
+        /// </summary>
         private void ChangeTile(GameObject tile, float rotation)
         {
             if (_chooseTile != null)
@@ -180,9 +191,9 @@ namespace MagariProject.UI
             }
             _buttonContainer.SetActive(false);
 
-            if(_isPlayerOne)
+            if (_isPlayerOne)
             {
-                if(CheckList(_playerOneImages))
+                if (CheckList(_playerOneImages))
                 {
                     EnablePlayerMovemement();
                 }
@@ -196,13 +207,16 @@ namespace MagariProject.UI
             }
         }
 
+        /// <summary>
+        /// Check if the player still has tiles
+        /// </summary>
         private bool CheckList(List<Image> list)
         {
             bool allNotActive = true;
 
             foreach (Image image in list)
             {
-                if(image.gameObject.activeInHierarchy)
+                if (image.gameObject.activeInHierarchy)
                 {
                     allNotActive = false;
                     break;
@@ -212,6 +226,9 @@ namespace MagariProject.UI
             return allNotActive;
         }
 
+        /// <summary>
+        /// Change the player UI and fill the player's hand
+        /// </summary>
         private void SetPlayer()
         {
             if (_isPlayerOne)
@@ -228,6 +245,9 @@ namespace MagariProject.UI
             }
         }
 
+        /// <summary>
+        /// Set a new tile for each tile in hand set to null
+        /// </summary>
         private void DrawTile(List<Image> list)
         {
             foreach (Image image in list)
@@ -247,9 +267,12 @@ namespace MagariProject.UI
             SetPlayer();
         }
 
+        /// <summary>
+        /// enable the players' movements
+        /// </summary>
         private void EnablePlayerMovemement()
         {
-            if(_isPlayerOne)
+            if (_isPlayerOne)
             {
                 Manager.Instance.PlayerOneMovement();
             }

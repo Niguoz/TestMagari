@@ -9,6 +9,10 @@ namespace MagariProject.Game
         [SerializeField]
         protected GameObject _owner;
 
+        /// <summary>
+        /// Sets its owner
+        /// </summary>
+        /// <param name="owner"></param>
         public virtual void SetOwner(GameObject owner)
         {
             if (_owner != null)
@@ -17,13 +21,15 @@ namespace MagariProject.Game
                 GameObject prevTile = owner.GetComponent<PlayerController>().OwnedTile;
                 Manager.Instance.ChangePosition(prevOwner, prevTile.transform.position);
             }
-            Debug.Log("Cambiato owner");
             _owner = owner;
         }
 
+        /// <summary>
+        /// Set the owner to null
+        /// </summary>
         public void CancelOwner()
         {
-            _owner= null;   
+            _owner = null;
         }
     }
 }

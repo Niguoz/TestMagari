@@ -32,6 +32,10 @@ namespace MagariProject.Game
             StartCoroutine(CreateGrid());
         }
 
+        /// <summary>
+        /// Create the dungeon grid
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator CreateGrid()
         {
             int halfX = (int)(_size.x / 2);
@@ -90,7 +94,10 @@ namespace MagariProject.Game
             yield return new WaitForSeconds(0.00001f);
         }
 
-
+        /// <summary>
+        /// Removes an element from the tiles list
+        /// </summary>
+        /// <param name="go"></param>
         public void RemoveFromList(GameObject go)
         {
             _tiles.Remove(go);
