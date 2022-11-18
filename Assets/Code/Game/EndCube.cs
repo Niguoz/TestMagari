@@ -1,6 +1,8 @@
+using MagariProject.Common;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MagariProject.Game
 {
@@ -13,6 +15,8 @@ namespace MagariProject.Game
             if(_owner != null)
             {
                 Debug.Log(_owner.name + " you win!!");
+                Manager.Instance.SetWinner(_owner.name);
+                SceneManager.LoadScene("EndScene");
             }
         }
     }

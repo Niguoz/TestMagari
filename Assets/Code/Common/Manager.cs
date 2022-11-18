@@ -13,7 +13,9 @@ namespace MagariProject.Common
 
         private PlayerController _playerOneController;
         private PlayerController _playerTwoController;
+        private string _winnerName;
 
+        public string WinnerName => _winnerName;
 
         public void ChangeTile(GameObject tileToChange, GameObject newTile, float rotation)
         {
@@ -29,6 +31,7 @@ namespace MagariProject.Common
         public void SpawnPlayerOne(Vector3 position)
         {
             GameObject playerOne = Instantiate(_playerOne);
+            playerOne.name = _playerOne.name;
             playerOne.transform.position = new Vector3(position.x, position.y + 1, position.z);
             _playerOneController = playerOne.GetComponent<PlayerController>();
             if (_playerOneController == null)
@@ -42,6 +45,7 @@ namespace MagariProject.Common
         public void SpawnPlayerTwo(Vector3 position)
         {
             GameObject playerTwo = Instantiate(_playerTwo);
+            playerTwo.name = _playerTwo.name;
             playerTwo.transform.position = new Vector3(position.x, position.y + 1, position.z);
             _playerTwoController = playerTwo.GetComponent<PlayerController>();
             if (_playerTwoController == null)
@@ -71,6 +75,11 @@ namespace MagariProject.Common
         {
             _playerOneController.enabled = false;
             _playerTwoController.enabled = false;
+        }
+
+        public void SetWinner(string name)
+        {
+            _winnerName = name;
         }
 
     }
