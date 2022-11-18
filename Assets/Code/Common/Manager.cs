@@ -17,6 +17,12 @@ namespace MagariProject.Common
 
         public string WinnerName => _winnerName;
 
+        protected override void Awake()
+        {
+            base.Awake();
+            DontDestroyOnLoad(this);
+        }
+
         public void ChangeTile(GameObject tileToChange, GameObject newTile, float rotation)
         {
             GameObject go = Instantiate(newTile);
