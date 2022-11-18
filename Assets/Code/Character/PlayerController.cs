@@ -57,6 +57,7 @@ namespace MagariProject.Character
             _moveStorage++;
             if(_moveStorage == _possibleMoves)
             {
+                gameObject.transform.position = new Vector3(_ownedTile.transform.position.x, _ownedTile.transform.position.y + 1, _ownedTile.transform.position.z);
                 UIManager.Instance.ChangePlayer();
             }
         }

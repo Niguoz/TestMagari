@@ -19,9 +19,9 @@ namespace MagariProject.Game
             PlayerController player = other.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                player.DecrementMoves();
                 _parent.GetComponent<ComplexCube>().SetOwner(player.gameObject);
                 player.OwnedTile = _parent;
+                player.DecrementMoves();             
             }
         }
 
