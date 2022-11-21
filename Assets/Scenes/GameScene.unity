@@ -2901,7 +2901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: affeae7519406c24a97109fcff90fc69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _size: {x: 10, y: 10}
+  _size: {x: 20, y: 20}
   _emptyTile: {fileID: 8147041035124629473, guid: b8645851684712942a1d206f80bab4ef, type: 3}
   _startTile: {fileID: 8290989814948041641, guid: 109cea8a465cea54d865dff3a89b81e3, type: 3}
   _endTile: {fileID: 1588649716296008965, guid: a3779637d8055354eac6ccba2eb4db46, type: 3}
@@ -3224,6 +3224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1378132541}
   - component: {fileID: 1378132540}
+  - component: {fileID: 1378132542}
   - component: {fileID: 1378132539}
   m_Layer: 0
   m_Name: Main Camera
@@ -3298,6 +3299,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &1378132542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378132538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6178a6029e079474cac84af612ef1b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _offset: {x: 0.75, y: 12, z: 0.75}
 --- !u!1 &1422516212
 GameObject:
   m_ObjectHideFlags: 0

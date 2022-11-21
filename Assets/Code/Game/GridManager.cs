@@ -1,3 +1,4 @@
+using MagariProject.CameraManagment;
 using MagariProject.Common;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,17 +76,17 @@ namespace MagariProject.Game
                         GameObject exit = Instantiate(_endTile);
                         exit.transform.SetParent(transform);
                         exit.transform.position = new Vector3(exitX, 0, exitY);
-                        if(exitY == _size.y)
+                        if(exitY == _size.y - 1)
                         {
                             exit.transform.localRotation = Quaternion.Euler(0, 180, 0);
                         }
                         if(exitX == 0)
                         {
-                            exit.transform.localRotation = Quaternion.Euler(0, -90, 0);
-                        }
-                        else if (exitX == _size.x) 
-                        {
                             exit.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                        }
+                        else if (exitX == _size.x - 1) 
+                        {
+                            exit.transform.localRotation = Quaternion.Euler(0, -90, 0);
                         }
                         
                     }
@@ -103,6 +104,8 @@ namespace MagariProject.Game
 
             Manager.Instance.SpawnPlayerOne(_startPlayerOnePosition);
             Manager.Instance.SpawnPlayerTwo(_startPlayerTwoPosition);
+
+            MultiTargetCamera.Instance.AdjustCamera(_tiles, _size.x);
 
             yield return new WaitForSeconds(0.00001f);
         }
