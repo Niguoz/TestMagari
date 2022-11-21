@@ -12,6 +12,11 @@ namespace MagariProject.CameraManagment
         [SerializeField]
         private Vector3 _offset;
 
+        /// <summary>
+        /// Set the objects that have to be on screen and get the board size
+        /// </summary>
+        /// <param name="targets">List of gameobjects that have to be on screen</param>
+        /// <param name="boardSize">Size of the Board</param>
         public void AdjustCamera(List<GameObject> targets, float boardSize)
         {
             _size = boardSize;
@@ -33,6 +38,9 @@ namespace MagariProject.CameraManagment
             }
         }
 
+        /// <summary>
+        /// Set the bounds and the ortographic size for the camera
+        /// </summary>
         private void SetCamera()
         {
             Vector3 position = GetCentrePosition();

@@ -33,7 +33,7 @@ namespace MagariProject.UI
 
         private void Tutorial()
         {
-            Debug.Log("Tutorial");
+            SceneManager.LoadScene("Tutorial");
         }
 
         private void Options()
