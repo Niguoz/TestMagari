@@ -75,6 +75,19 @@ namespace MagariProject.Game
                         GameObject exit = Instantiate(_endTile);
                         exit.transform.SetParent(transform);
                         exit.transform.position = new Vector3(exitX, 0, exitY);
+                        if(exitY == _size.y)
+                        {
+                            exit.transform.localRotation = Quaternion.Euler(0, 180, 0);
+                        }
+                        if(exitX == 0)
+                        {
+                            exit.transform.localRotation = Quaternion.Euler(0, -90, 0);
+                        }
+                        else if (exitX == _size.x) 
+                        {
+                            exit.transform.localRotation = Quaternion.Euler(0, 90, 0);
+                        }
+                        
                     }
                     else
                     {

@@ -7,7 +7,8 @@ namespace MagariProject.Game
     public class SimpleCube : MonoBehaviour
     {
         public UnityEvent _action;
-        public bool _nearcomplexCube = false;
+        private bool _nearcomplexCube = false;
+        private bool _hasOwner = false;
 
         [SerializeField]
         private LayerMask _layer;
@@ -15,6 +16,13 @@ namespace MagariProject.Game
         private float _distance;
         [SerializeField]
         private Material _possibleChangeMat;
+
+        private ComplexCube _complexCube;
+
+        private void Awake()
+        {
+            _complexCube = GetComponent<ComplexCube>();
+        }
 
         /// <summary>
         /// When clicked, set the place where the new tile has to spawn
@@ -31,7 +39,15 @@ namespace MagariProject.Game
 
         private void OnMouseDown()
         {
-            if (_nearcomplexCube)
+            if (_complexCube != null)
+            {
+                if (_complexCube.Owner != null)
+                {
+                    _hasOwner = true;
+                }
+            }
+
+            if (_nearcomplexCube && !_hasOwner)
             {
                 _action.Invoke();
             }

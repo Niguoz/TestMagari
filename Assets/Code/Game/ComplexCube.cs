@@ -9,6 +9,7 @@ namespace MagariProject.Game
         [SerializeField]
         protected GameObject _owner;
 
+        public GameObject Owner => _owner;
         /// <summary>
         /// Sets its owner
         /// </summary>
