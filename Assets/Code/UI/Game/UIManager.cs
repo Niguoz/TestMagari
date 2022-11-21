@@ -1,6 +1,7 @@
 using MagariProject.Common;
 using MagariProject.Input;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ namespace MagariProject.UI
         private GameObject _uiGame;
         #region Player One Hand
         private GameObject _playerOne;
+
+        private TextMeshProUGUI _playerOnePhase;
 
         private Image _tile1Image;
         private Image _tile2Image;
@@ -35,6 +38,8 @@ namespace MagariProject.UI
 
         #region Player Two Hand
         private GameObject _playerTwo;
+
+        private TextMeshProUGUI _playerTwoPhase;
 
         private Image _playerTwoTile1Image;
         private Image _playerTwoTile2Image;
@@ -135,6 +140,9 @@ namespace MagariProject.UI
             _options = _uiPause.transform.Find("Options").GetComponent<Button>();
             _quit = _uiPause.transform.Find("Quit").GetComponent<Button>();
 
+
+            _playerOnePhase = _playerOne.transform.Find("Phase").GetComponent<TextMeshProUGUI>();
+            _playerTwoPhase = _playerTwo.transform.Find("Phase").GetComponent<TextMeshProUGUI>();
 
             _changePlayer = _uiGame.transform.Find("ChangePlayer").GetComponent<Button>();
             _startMove = _uiGame.transform.Find("StartMovement").GetComponent<Button>();
@@ -273,12 +281,14 @@ namespace MagariProject.UI
             {
                 _playerTwo.SetActive(false);
                 _playerOne.SetActive(true);
+                _playerOnePhase.text = "Build";
                 DrawTile(_playerOneImages);
             }
             else
             {
                 _playerTwo.SetActive(true);
                 _playerOne.SetActive(false);
+                _playerTwoPhase.text = "Build";
                 DrawTile(_playerTwoImages);
             }
         }
@@ -313,10 +323,12 @@ namespace MagariProject.UI
             if (_isPlayerOne)
             {
                 Manager.Instance.PlayerOneMovement();
+                _playerOnePhase.text = "Move";
             }
             else
             {
                 Manager.Instance.PlayerTwoMovement();
+                _playerTwoPhase.text = "Move";
             }
         }
 
