@@ -1,6 +1,8 @@
 using MagariProject.Common;
+using MagariProject.Input;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MagariProject.UI
@@ -12,6 +14,7 @@ namespace MagariProject.UI
         [SerializeField]
         private List<GameObject> _newTiles = new();
 
+        private GameObject _uiGame;
         #region Player One Hand
         private GameObject _playerOne;
 
@@ -48,7 +51,7 @@ namespace MagariProject.UI
         private List<Image> _playerTwoImages = new();
         #endregion
 
-        #region
+        #region Direction
         private Button _spawnUp;
         private Button _spawnDown;
         private Button _spawnLeft;
@@ -57,23 +60,34 @@ namespace MagariProject.UI
         private GameObject _buttonContainer;
         #endregion
 
+        #region Pause
+        private GameObject _uiPause;
+        private GameObject _uiOptions;
+        private Button _resume;
+        private Button _quit;
+        private Button _options;
+        #endregion
+
         private GameObject _chooseTile;
         private bool _isPlayerOne = true;
         private Button _changePlayer;
         private Button _startMove;
+        private Player _pauseAction;
 
         public bool IsPlayerOne => _isPlayerOne;
 
         protected override void Awake()
         {
-            _playerOne = transform.Find("Player1").gameObject;
-            _playerTwo = transform.Find("Player2").gameObject;
+            _uiGame = transform.Find("Game").gameObject;
 
-            _tile1Image = transform.Find("Player1/TileContainer/Tile1").GetComponent<Image>();
-            _tile2Image = transform.Find("Player1/TileContainer/Tile2").GetComponent<Image>();
-            _tile3Image = transform.Find("Player1/TileContainer/Tile3").GetComponent<Image>();
-            _tile4Image = transform.Find("Player1/TileContainer/Tile4").GetComponent<Image>();
-            _tile5Image = transform.Find("Player1/TileContainer/Tile5").GetComponent<Image>();
+            _playerOne = _uiGame.transform.Find("Player1").gameObject;
+            _playerTwo = _uiGame.transform.Find("Player2").gameObject;
+
+            _tile1Image = _uiGame.transform.Find("Player1/TileContainer/Tile1").GetComponent<Image>();
+            _tile2Image = _uiGame.transform.Find("Player1/TileContainer/Tile2").GetComponent<Image>();
+            _tile3Image = _uiGame.transform.Find("Player1/TileContainer/Tile3").GetComponent<Image>();
+            _tile4Image = _uiGame.transform.Find("Player1/TileContainer/Tile4").GetComponent<Image>();
+            _tile5Image = _uiGame.transform.Find("Player1/TileContainer/Tile5").GetComponent<Image>();
 
             _playerOneImages.Add(_tile1Image);
             _playerOneImages.Add(_tile2Image);
@@ -87,11 +101,11 @@ namespace MagariProject.UI
             _button4 = _tile4Image.gameObject.GetComponent<Button>();
             _button5 = _tile5Image.gameObject.GetComponent<Button>();
 
-            _playerTwoTile1Image = transform.Find("Player2/TileContainer/Tile1").GetComponent<Image>();
-            _playerTwoTile2Image = transform.Find("Player2/TileContainer/Tile2").GetComponent<Image>();
-            _playerTwoTile3Image = transform.Find("Player2/TileContainer/Tile3").GetComponent<Image>();
-            _playerTwoTile4Image = transform.Find("Player2/TileContainer/Tile4").GetComponent<Image>();
-            _playerTwoTile5Image = transform.Find("Player2/TileContainer/Tile5").GetComponent<Image>();
+            _playerTwoTile1Image = _uiGame.transform.Find("Player2/TileContainer/Tile1").GetComponent<Image>();
+            _playerTwoTile2Image = _uiGame.transform.Find("Player2/TileContainer/Tile2").GetComponent<Image>();
+            _playerTwoTile3Image = _uiGame.transform.Find("Player2/TileContainer/Tile3").GetComponent<Image>();
+            _playerTwoTile4Image = _uiGame.transform.Find("Player2/TileContainer/Tile4").GetComponent<Image>();
+            _playerTwoTile5Image = _uiGame.transform.Find("Player2/TileContainer/Tile5").GetComponent<Image>();
 
             _playerTwoImages.Add(_playerTwoTile1Image);
             _playerTwoImages.Add(_playerTwoTile2Image);
@@ -105,7 +119,7 @@ namespace MagariProject.UI
             _playerTwoButton4 = _playerTwoTile4Image.gameObject.GetComponent<Button>();
             _playerTwoButton5 = _playerTwoTile5Image.gameObject.GetComponent<Button>();
 
-            _buttonContainer = transform.Find("Direction").gameObject;
+            _buttonContainer = _uiGame.transform.Find("Direction").gameObject;
             _spawnUp = _buttonContainer.transform.Find("Up").gameObject.GetComponent<Button>();
             _spawnDown = _buttonContainer.transform.Find("Down").gameObject.GetComponent<Button>();
             _spawnLeft = _buttonContainer.transform.Find("Left").gameObject.GetComponent<Button>();
@@ -115,9 +129,16 @@ namespace MagariProject.UI
             _spawnButtons.Add(_spawnDown);
             _spawnButtons.Add(_spawnRight);
 
+            _uiPause = transform.Find("Pause").gameObject;
+            _uiOptions = transform.Find("Options").gameObject;
+            _resume = _uiPause.transform.Find("Resume").GetComponent<Button>();
+            _options = _uiPause.transform.Find("Options").GetComponent<Button>();
+            _quit = _uiPause.transform.Find("Quit").GetComponent<Button>();
 
-            _changePlayer = transform.Find("ChangePlayer").GetComponent<Button>();
-            _startMove = transform.Find("StartMovement").GetComponent<Button>();
+
+            _changePlayer = _uiGame.transform.Find("ChangePlayer").GetComponent<Button>();
+            _startMove = _uiGame.transform.Find("StartMovement").GetComponent<Button>();
+            _pauseAction = new();
 
             base.Awake();
         }
@@ -142,6 +163,23 @@ namespace MagariProject.UI
 
             _changePlayer.onClick.AddListener(ChangePlayer);
             _startMove.onClick.AddListener(EnablePlayerMovemement);
+
+            _resume.onClick.AddListener(Resume);
+            _quit.onClick.AddListener(Application.Quit);
+        }
+
+        private void OnEnable()
+        {
+            _pauseAction.UI.Pause.performed += _ => PauseGame();
+
+            _pauseAction.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _pauseAction.UI.Pause.performed -= _ => PauseGame();
+
+            _pauseAction.Disable();
         }
 
         /// <summary>
@@ -279,6 +317,58 @@ namespace MagariProject.UI
             else
             {
                 Manager.Instance.PlayerTwoMovement();
+            }
+        }
+
+        private void PauseGame()
+        {
+            if (Manager.Instance.CurrentGameState == GameState.Game)
+            {
+                Manager.Instance.CurrentGameState = GameState.Pause;
+                FreezeTime(true);
+                _uiPause.SetActive(true);
+                _uiGame.SetActive(false);
+            }
+            else if (Manager.Instance.CurrentGameState == GameState.Pause)
+            {
+                if (_uiOptions.activeInHierarchy)
+                {
+                    _uiOptions.SetActive(false);
+                    _uiPause.SetActive(true);
+                }
+                else
+                {
+                    Resume();
+                }
+            }
+        }
+
+        private void Resume()
+        {
+            _uiGame.SetActive(true);
+            _uiOptions.SetActive(false);
+            _uiPause.SetActive(false);
+            FreezeTime(false);
+            Manager.Instance.CurrentGameState = GameState.Game;
+        }
+
+        /// <summary>
+        /// Manage the timescale of the game and the Car input
+        /// </summary>
+        /// <param name="activate"> if true freeze game, else defreeze</param>
+        public void FreezeTime(bool activate)
+        {
+            if (activate)
+            {
+                Time.timeScale = 0;
+              
+                Manager.Instance.DisableMOvement();
+            }
+            else
+            {
+                Time.timeScale = 1;
+
+                Manager.Instance.EnableMovement(_isPlayerOne);
             }
         }
     }

@@ -1,6 +1,6 @@
 using MagariProject.Character;
 using MagariProject.Game;
-using UnityEditor.Experimental.GraphView;
+using System;
 using UnityEngine;
 
 namespace MagariProject.Common
@@ -41,6 +41,7 @@ namespace MagariProject.Common
             Destroy(tileToChange.gameObject);
         }
 
+        #region Spawns
         /// <summary>
         /// Spawn player One at his start position
         /// </summary>
@@ -76,6 +77,7 @@ namespace MagariProject.Common
 
             _playerTwoController.enabled = false;
         }
+        #endregion
 
         /// <summary>
         /// If they cross another character while moving, they swap positions as
@@ -88,6 +90,7 @@ namespace MagariProject.Common
             go.transform.position = new Vector3(position.x, position.y + 1, position.z);
         }
 
+        #region Movements
         public void PlayerOneMovement()
         {
             _playerOneController.enabled = true;
@@ -98,11 +101,25 @@ namespace MagariProject.Common
             _playerTwoController.enabled = true;
         }
 
+        public void EnableMovement(bool isPlayerOne)
+        {
+            if(isPlayerOne)
+            {
+                PlayerOneMovement();
+            }
+            else
+            {
+                PlayerTwoMovement();
+            }
+        }
+
         public void DisableMOvement()
         {
             _playerOneController.enabled = false;
             _playerTwoController.enabled = false;
         }
+
+        #endregion
 
         /// <summary>
         /// Set the winner name
@@ -112,5 +129,28 @@ namespace MagariProject.Common
         {
             _winnerName = name;
         }
+
+        #region GameState
+        private GameState _gameState;
+        public GameState CurrentGameState
+        {
+            get => _gameState;
+            set
+            {
+                _gameState = value;
+
+                if (OnGameStateChange != null)
+                {
+                    OnGameStateChange.Invoke(_gameState);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Event Triggered when the gameState is changed
+        /// </summary>
+        public event Action<GameState> OnGameStateChange;
+
+        #endregion
     }
 }

@@ -96,6 +96,34 @@ namespace MagariProject.Input
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""16845a4a-cb78-4f36-8a49-48ef79a63bda"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""08f2a33d-48ef-41a5-9ca0-49f39d80ed5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d2a218de-3713-452c-a7e9-80c5618af2be"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -103,6 +131,9 @@ namespace MagariProject.Input
             // PlayerMovement
             m_PlayerMovement = asset.FindActionMap("PlayerMovement", throwIfNotFound: true);
             m_PlayerMovement_Move = m_PlayerMovement.FindAction("Move", throwIfNotFound: true);
+            // UI
+            m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+            m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -191,9 +222,46 @@ namespace MagariProject.Input
             }
         }
         public PlayerMovementActions @PlayerMovement => new PlayerMovementActions(this);
+
+        // UI
+        private readonly InputActionMap m_UI;
+        private IUIActions m_UIActionsCallbackInterface;
+        private readonly InputAction m_UI_Pause;
+        public struct UIActions
+        {
+            private @Player m_Wrapper;
+            public UIActions(@Player wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Pause => m_Wrapper.m_UI_Pause;
+            public InputActionMap Get() { return m_Wrapper.m_UI; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+            public void SetCallbacks(IUIActions instance)
+            {
+                if (m_Wrapper.m_UIActionsCallbackInterface != null)
+                {
+                    @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                    @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                    @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                }
+                m_Wrapper.m_UIActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @Pause.started += instance.OnPause;
+                    @Pause.performed += instance.OnPause;
+                    @Pause.canceled += instance.OnPause;
+                }
+            }
+        }
+        public UIActions @UI => new UIActions(this);
         public interface IPlayerMovementActions
         {
             void OnMove(InputAction.CallbackContext context);
+        }
+        public interface IUIActions
+        {
+            void OnPause(InputAction.CallbackContext context);
         }
     }
 }
