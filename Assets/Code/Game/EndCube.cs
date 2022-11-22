@@ -16,6 +16,7 @@ namespace MagariProject.Game
             if (_owner != null)
             {
                 DataManager.Instance.WinnerName = _owner.name;
+                SceneManager.LoadScene("EndScene");
             }
         }
     }
