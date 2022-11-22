@@ -1,6 +1,8 @@
 using MagariProject.Common;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 namespace MagariProject.UI
@@ -11,6 +13,8 @@ namespace MagariProject.UI
         private Button _incrementBoardSize;
         private Button _decrementBoardSize;
         private TextMeshProUGUI _boardsize;
+        [SerializeField]
+        private AudioMixer _mixer;
 
         private void Awake()
         {
@@ -20,8 +24,12 @@ namespace MagariProject.UI
             _boardsize = transform.Find("Size").GetComponent<TextMeshProUGUI>();
 
             _boardsize.text = DataManager.Instance.BoardSize.ToString();
+            _soundSlider.value = DataManager.Instance.MusicValue;
+
             _incrementBoardSize.onClick.AddListener(delegate { SetBoardSize(1); });
             _decrementBoardSize.onClick.AddListener(delegate { SetBoardSize(-1); });
+
+            _soundSlider.onValueChanged.AddListener(delegate { UpdateValueOnChange(_soundSlider.value); });
         }
 
         private void SetBoardSize(float value)
@@ -37,6 +45,12 @@ namespace MagariProject.UI
             }
 
             _boardsize.text = DataManager.Instance.BoardSize.ToString();
+        }
+
+        private void UpdateValueOnChange(float value)
+        {
+            DataManager.Instance.MusicValue = value;
+            _mixer.SetFloat("Music", Mathf.Log(value) * 20f);       
         }
     }
 }

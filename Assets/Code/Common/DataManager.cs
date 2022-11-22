@@ -3,7 +3,7 @@ namespace MagariProject.Common
     public class DataManager : PersistentSingleton<DataManager>
     {
         private float _boardSize = 10;
-        private float _musicValue;
+        private float _musicValue = 1;
         private string _winnerName;
 
         public float BoardSize
