@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MagariProject.UI
 {
+    [RequireComponent(typeof(AudioSource))]
     public class Tutorial : MonoBehaviour
     {
         private GameObject _firstPage;
@@ -16,6 +18,14 @@ namespace MagariProject.UI
         private Button _nextButtonPage2;
         private Button _prevButtonPage2;
         private Button _prevButtonPage3;
+
+        #region Audio
+        [SerializeField]
+        private AudioClip _clip;
+        [SerializeField]
+        private AudioMixerGroup _clipGroup;
+        private AudioSource _source;
+        #endregion
 
         private void Awake()
         {
@@ -39,6 +49,9 @@ namespace MagariProject.UI
             _nextButtonPage2.onClick.AddListener(delegate { ChangePage(_thirdPage); });
             _prevButtonPage2.onClick.AddListener(delegate { ChangePage(_firstPage); });
             _prevButtonPage3.onClick.AddListener(delegate { ChangePage(_secondPage); });
+
+            _source = GetComponent<AudioSource>();
+            _source.outputAudioMixerGroup = _clipGroup;
         }
 
         /// <summary>
@@ -47,6 +60,7 @@ namespace MagariProject.UI
         /// <param name="pageToShow">Page to show</param>
         private void ChangePage(GameObject pageToShow)
         {
+            _source.PlayOneShot(_clip);
             _firstPage.SetActive(false);
             _secondPage.SetActive(false);
             _thirdPage.SetActive(false);

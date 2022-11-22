@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace MagariProject.UI
 {
-
+    [RequireComponent(typeof(AudioSource))]
     public class MainMenu : MonoBehaviour
     {
         private Button _playButton;
@@ -15,6 +16,14 @@ namespace MagariProject.UI
 
         private GameObject _menuContainer;
         private GameObject _optionsContainer;
+
+        #region Audio
+        [SerializeField]
+        private AudioClip _clip;
+        [SerializeField]
+        private AudioMixerGroup _clipGroup;
+        private AudioSource _source;
+        #endregion
 
         private void Awake()
         {
@@ -27,6 +36,9 @@ namespace MagariProject.UI
             _optionsContainer = transform.Find("Options").gameObject;
             _back = _optionsContainer.transform.Find("Back").GetComponent<Button>();
 
+            _source = GetComponent<AudioSource>();
+            _source.outputAudioMixerGroup = _clipGroup;
+
             _playButton.onClick.AddListener(StartGame);
             _tutorialButton.onClick.AddListener(Tutorial);
             _optionsButton.onClick.AddListener(Options);
@@ -37,16 +49,19 @@ namespace MagariProject.UI
 
         private void StartGame()
         {
+            _source.PlayOneShot(_clip);
             SceneManager.LoadScene("GameScene");
         }
 
         private void Tutorial()
         {
+            _source.PlayOneShot(_clip);
             SceneManager.LoadScene("Tutorial");
         }
 
         private void Options()
         {
+            _source.PlayOneShot(_clip);
             if (_optionsContainer.activeInHierarchy)
             {
                 _optionsContainer.SetActive(false);
@@ -61,6 +76,7 @@ namespace MagariProject.UI
 
         private void QuitGame()
         {
+            _source.PlayOneShot(_clip);
             Application.Quit();
         }
     }

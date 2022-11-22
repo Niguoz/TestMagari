@@ -3,11 +3,13 @@ using MagariProject.Input;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace MagariProject.UI
 {
+    [RequireComponent(typeof(AudioSource))]
     public class UIManager : Singleton<UIManager>
     {
         [SerializeField]
@@ -82,6 +84,14 @@ namespace MagariProject.UI
 
         public bool IsPlayerOne => _isPlayerOne;
 
+        #region Audio
+        [SerializeField]
+        private AudioClip _clip;
+        [SerializeField]
+        private AudioMixerGroup _clipGroup;
+        private AudioSource _source;
+        #endregion
+
         protected override void Awake()
         {
             _uiGame = transform.Find("Game").gameObject;
@@ -150,6 +160,9 @@ namespace MagariProject.UI
             _startMove = _uiGame.transform.Find("StartMovement").GetComponent<Button>();
             _pauseAction = new();
 
+            _source = GetComponent<AudioSource>();
+            _source.outputAudioMixerGroup = _clipGroup;
+
             base.Awake();
         }
 
@@ -208,6 +221,7 @@ namespace MagariProject.UI
         /// </summary>
         private void SetMaterial(Image image)
         {
+            _source.PlayOneShot(_clip);
             _chooseTile = _newTiles.Find(x => x.name == image.sprite.name);
             image.sprite = null;
             image.gameObject.SetActive(false);
@@ -314,6 +328,7 @@ namespace MagariProject.UI
 
         public void ChangePlayer()
         {
+            _source.PlayOneShot(_clip);
             _isPlayerOne = !_isPlayerOne;
             Manager.Instance.DisableMOvement();
             SetPlayer();
@@ -324,6 +339,7 @@ namespace MagariProject.UI
         /// </summary>
         private void EnablePlayerMovemement()
         {
+            _source.PlayOneShot(_clip);
             if (_isPlayerOne)
             {
                 Manager.Instance.PlayerOneMovement();
@@ -361,6 +377,7 @@ namespace MagariProject.UI
 
         private void Resume()
         {
+            _source.PlayOneShot(_clip);
             _uiGame.SetActive(true);
             _uiOptions.SetActive(false);
             _uiPause.SetActive(false);
@@ -390,7 +407,8 @@ namespace MagariProject.UI
 
         private void OptionsMenu()
         {
-            if(_uiOptions.activeInHierarchy)
+            _source.PlayOneShot(_clip);
+            if (_uiOptions.activeInHierarchy)
             {
                 _uiOptions.SetActive(false);
                 _uiPause.SetActive(true);

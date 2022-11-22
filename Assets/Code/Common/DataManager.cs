@@ -4,6 +4,7 @@ namespace MagariProject.Common
     {
         private float _boardSize = 10;
         private float _musicValue = 1;
+        private float _effectsValue = 1;
         private string _winnerName;
 
         public float BoardSize
@@ -16,6 +17,12 @@ namespace MagariProject.Common
         {
             get { return _musicValue; }
             set { _musicValue = value; }
+        }
+
+        public float EffectsValue
+        {
+            get { return _effectsValue; }
+            set { _effectsValue = value; }
         }
 
         public string WinnerName

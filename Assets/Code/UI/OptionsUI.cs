@@ -10,6 +10,7 @@ namespace MagariProject.UI
     public class OptionsUI : MonoBehaviour
     {
         private Slider _soundSlider;
+        private Slider _effectSlider;
         private Button _incrementBoardSize;
         private Button _decrementBoardSize;
         private TextMeshProUGUI _boardsize;
@@ -19,17 +20,20 @@ namespace MagariProject.UI
         private void Awake()
         {
             _soundSlider = transform.Find("MusicSlider").GetComponent<Slider>();
+            _effectSlider = transform.Find("EffectsSlider").GetComponent<Slider>();
             _incrementBoardSize = transform.Find("Increment").GetComponent<Button>();
             _decrementBoardSize = transform.Find("Decrement").GetComponent<Button>();
             _boardsize = transform.Find("Size").GetComponent<TextMeshProUGUI>();
 
             _boardsize.text = DataManager.Instance.BoardSize.ToString();
             _soundSlider.value = DataManager.Instance.MusicValue;
+            _effectSlider.value = DataManager.Instance.EffectsValue;
 
             _incrementBoardSize.onClick.AddListener(delegate { SetBoardSize(1); });
             _decrementBoardSize.onClick.AddListener(delegate { SetBoardSize(-1); });
 
-            _soundSlider.onValueChanged.AddListener(delegate { UpdateValueOnChange(_soundSlider.value); });
+            _soundSlider.onValueChanged.AddListener(delegate { UpdateValueOnChange("Music", _soundSlider.value); });
+            _effectSlider.onValueChanged.AddListener(delegate { UpdateValueOnChange("Effects", _effectSlider.value); });
         }
 
         private void SetBoardSize(float value)
@@ -47,10 +51,10 @@ namespace MagariProject.UI
             _boardsize.text = DataManager.Instance.BoardSize.ToString();
         }
 
-        private void UpdateValueOnChange(float value)
+        private void UpdateValueOnChange(string group, float value)
         {
             DataManager.Instance.MusicValue = value;
-            _mixer.SetFloat("Music", Mathf.Log(value) * 20f);       
+            _mixer.SetFloat(group, Mathf.Log(value) * 20f);       
         }
     }
 }
