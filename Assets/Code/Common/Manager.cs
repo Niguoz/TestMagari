@@ -14,15 +14,6 @@ namespace MagariProject.Common
 
         private PlayerController _playerOneController;
         private PlayerController _playerTwoController;
-        private string _winnerName;
-
-        public string WinnerName => _winnerName;
-
-        protected override void Awake()
-        {
-            base.Awake();
-            DontDestroyOnLoad(this);
-        }
 
         /// <summary>
         /// Spawn the choose tile with the choose rotation at the choose place
@@ -120,15 +111,6 @@ namespace MagariProject.Common
         }
 
         #endregion
-
-        /// <summary>
-        /// Set the winner name
-        /// </summary>
-        /// <param name="name"></param>
-        public void SetWinner(string name)
-        {
-            _winnerName = name;
-        }
 
         #region GameState
         private GameState _gameState;

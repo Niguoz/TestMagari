@@ -71,6 +71,7 @@ namespace MagariProject.UI
         private Button _resume;
         private Button _quit;
         private Button _options;
+        private Button _backOptions;
         #endregion
 
         private GameObject _chooseTile;
@@ -139,6 +140,7 @@ namespace MagariProject.UI
             _resume = _uiPause.transform.Find("Resume").GetComponent<Button>();
             _options = _uiPause.transform.Find("Options").GetComponent<Button>();
             _quit = _uiPause.transform.Find("Quit").GetComponent<Button>();
+            _backOptions = _uiOptions.transform.Find("Back").GetComponent<Button>();
 
 
             _playerOnePhase = _playerOne.transform.Find("Phase").GetComponent<TextMeshProUGUI>();
@@ -174,6 +176,8 @@ namespace MagariProject.UI
 
             _resume.onClick.AddListener(Resume);
             _quit.onClick.AddListener(Application.Quit);
+            _options.onClick.AddListener(OptionsMenu);
+            _backOptions.onClick.AddListener(OptionsMenu);
         }
 
         private void OnEnable()
@@ -368,7 +372,7 @@ namespace MagariProject.UI
         /// Manage the timescale of the game and the Car input
         /// </summary>
         /// <param name="activate"> if true freeze game, else defreeze</param>
-        public void FreezeTime(bool activate)
+        private void FreezeTime(bool activate)
         {
             if (activate)
             {
@@ -381,6 +385,20 @@ namespace MagariProject.UI
                 Time.timeScale = 1;
 
                 Manager.Instance.EnableMovement(_isPlayerOne);
+            }
+        }
+
+        private void OptionsMenu()
+        {
+            if(_uiOptions.activeInHierarchy)
+            {
+                _uiOptions.SetActive(false);
+                _uiPause.SetActive(true);
+            }
+            else
+            {
+                _uiOptions.SetActive(true);
+                _uiPause.SetActive(false);
             }
         }
     }

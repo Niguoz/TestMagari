@@ -21,8 +21,7 @@ namespace MagariProject.UI
 
         private void Start()
         {
-            _winnerName.text = Manager.Instance.WinnerName;
-            Debug.Log(Manager.Instance.WinnerName);
+            _winnerName.text = DataManager.Instance.WinnerName;
 
             _replayButton.onClick.AddListener(Replay);
             _quitButton.onClick.AddListener(QuitGame);

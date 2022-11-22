@@ -8,7 +8,6 @@ namespace MagariProject.Game
 {
     public class GridManager : Singleton<GridManager>
     {
-        [SerializeField]
         private Vector2 _size;
 
         [SerializeField]
@@ -27,6 +26,12 @@ namespace MagariProject.Game
 
         private Vector3 _startPlayerOnePosition;
         private Vector3 _startPlayerTwoPosition;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _size = new Vector2(DataManager.Instance.BoardSize, DataManager.Instance.BoardSize);    
+        }
 
         private void Start()
         {
